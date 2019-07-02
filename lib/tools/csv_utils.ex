@@ -39,4 +39,29 @@ defmodule ExBacktest.Tools.CsvUtils do
     end)
     |> Enum.to_list()
   end
+
+  @doc """
+  Filter by date range
+    Get csv content and filter it based on a date range
+
+  ## Parameters
+    - [h|t]: Array of csv data with header
+    - date_from: date in string, the format must be "%y-%m-%d %H:%M:00" to be parsed with NaiveDateTime.from_iso8601(str_date)
+
+  ## Example
+  ```
+    [header | filtered_data] = CsvUtils.read_csv(stream) |> CsvUtils.filter_by_date_range("2016-01-01 00:00:00", "2019-01-01 00:00:00")
+  ```
+  """
+  def filter_by_date_range([h | t], date_from, date_until) do
+    {:ok, n_date_from} = NaiveDateTime.from_iso8601(date_from)
+    {:ok, n_date_until} = NaiveDateTime.from_iso8601(date_until)
+    datetime_col_index = Enum.find_index(h, fn x -> x == "DateTime" end)
+    filtered_data = Enum.filter(t, fn x ->
+      NaiveDateTime.compare(Enum.at(x, datetime_col_index), n_date_from) == :gt and
+      NaiveDateTime.compare(Enum.at(x, datetime_col_index), n_date_until) == :lt
+    end)
+    [h | filtered_data]
+  end
+
 end
