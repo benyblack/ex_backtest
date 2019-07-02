@@ -45,7 +45,7 @@ defmodule ExBacktest.Tools.CsvUtils do
     Get csv content and filter it based on a date range
 
   ## Parameters
-    - [h|t]: Array of csv data with header
+    - [h|t]: CSV data with header
     - date_from: date in string, the format must be "%y-%m-%d %H:%M:00" to be parsed with NaiveDateTime.from_iso8601(str_date)
 
   ## Example
@@ -62,6 +62,27 @@ defmodule ExBacktest.Tools.CsvUtils do
       NaiveDateTime.compare(Enum.at(x, datetime_col_index), n_date_until) == :lt
     end)
     [h | filtered_data]
+  end
+
+  @doc """
+  Get column's data
+    Return an array of values belong to a column in the csv data
+  
+  ## Parameters
+    - [h|t]: CSV data with header
+    - col_name: Name of the column
+  
+  ## Example
+  ```
+    data = [["DateTime","Open","Close"],[1,2,3],[4,5,6],[7,8,9]]
+    column_data = CsvUtils.get_col(data, "Close")
+    # column_data == [3,6,9]
+  ```
+  """
+  def get_col([h | t], col_name) do
+    col_index = Enum.find_index(h, fn x -> x == col_name end)
+    inspect(hd(t))
+    Enum.map(t, fn x -> Enum.at(x, col_index) end)
   end
 
 end
