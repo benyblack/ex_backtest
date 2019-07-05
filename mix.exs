@@ -37,7 +37,8 @@ defmodule ExBacktest.MixProject do
   # Run "mix help deps" to learn about dependencies.
   defp deps do
     [
-      {:erlport, "~> 0.9"}
+      {:erlport, "~> 0.9"},
+      {:talib, "~> 0.3.5"}
     ]
   end
 end

@@ -1,3 +1,4 @@
 %{
   "erlport": {:hex, :erlport, "0.10.1", "c96ffa51bbcab0298232fcdfe8c3e110f1598011de71ae6b9082b80c9e2e476a", [:rebar3], [], "hexpm"},
+  "talib": {:hex, :talib, "0.3.5", "2458f914d99b0ec24683824265592ed7617c6aeeef437f6178f1a38c2cb5dc45", [:mix], [], "hexpm"},
 }
