@@ -67,11 +67,11 @@ defmodule ExBacktest.Tools.CsvUtils do
   @doc """
   Get column's data
     Return an array of values belong to a column in the csv data
-  
+
   ## Parameters
     - [h|t]: CSV data with header
     - col_name: Name of the column
-  
+
   ## Example
   ```
     data = [["DateTime","Open","Close"],[1,2,3],[4,5,6],[7,8,9]]
@@ -81,7 +81,6 @@ defmodule ExBacktest.Tools.CsvUtils do
   """
   def get_col([h | t], col_name) do
     col_index = Enum.find_index(h, fn x -> x == col_name end)
-    inspect(hd(t))
     Enum.map(t, fn x -> Enum.at(x, col_index) end)
   end
 
