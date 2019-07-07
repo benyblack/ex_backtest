@@ -28,16 +28,17 @@ defmodule ExBacktest.Tools.CsvUtils do
     stream
     |> Stream.map(&String.trim(&1))
     |> Stream.map(&String.split(&1, ","))
-    |> Stream.map(fn
-      ["DateTime" | tl] ->
-        ["DateTime" | tl]
+    # |> Stream.map(fn
+    #   ["DateTime" | tl] ->
+    #     ["DateTime" | tl]
 
-      [datetime | tl] ->
-        inspect(datetime)
-        {:ok, ex_datetime} = NaiveDateTime.from_iso8601(datetime)
-        [ex_datetime | tl]
-    end)
+    #   [datetime | tl] ->
+    #     inspect(datetime)
+    #     {:ok, ex_datetime} = NaiveDateTime.from_iso8601(datetime)
+    #     [ex_datetime | tl]
+    # end)
     |> Enum.to_list()
+    |> Enum.filter(fn(x) -> x != '' end)
   end
 
   @doc """
@@ -54,12 +55,16 @@ defmodule ExBacktest.Tools.CsvUtils do
   ```
   """
   def filter_by_date_range([h | t], date_from, date_until) do
-    {:ok, n_date_from} = NaiveDateTime.from_iso8601(date_from)
-    {:ok, n_date_until} = NaiveDateTime.from_iso8601(date_until)
+    get_date = fn(date_str) ->
+      {:ok, date} = NaiveDateTime.from_iso8601(date_str)
+      date
+    end
+    n_date_from = get_date.(date_from)
+    n_date_until = get_date.(date_until)
     datetime_col_index = Enum.find_index(h, fn x -> x == "DateTime" end)
     filtered_data = Enum.filter(t, fn x ->
-      NaiveDateTime.compare(Enum.at(x, datetime_col_index), n_date_from) == :gt and
-      NaiveDateTime.compare(Enum.at(x, datetime_col_index), n_date_until) == :lt
+      NaiveDateTime.compare(Enum.at(x, datetime_col_index)|>get_date.(), n_date_from) == :gt and
+      NaiveDateTime.compare(Enum.at(x, datetime_col_index)|>get_date.(), n_date_until) == :lt
     end)
     [h | filtered_data]
   end
