@@ -25,3 +25,9 @@ ex_backtest-*.tar
 /.elixir_ls
 
 /.vscode
+
+# Python related files and folder
+*.pyc
+
+# Generated html file by Bokeh
+chart.html
