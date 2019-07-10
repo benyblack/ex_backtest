@@ -45,11 +45,7 @@ defmodule ExBacktest.Strategy.Trader  do
     end
 
     def calc_trade_resault(buy_price, sell_price, commission, cash) do
-        z = (sell_price/buy_price - commission) * cash
-        # IO.puts('#{buy_price<sell_price} #{buy_price} #{sell_price} #{cash} #{commission} #{z}')
-
-        # IO.puts(z)
-        z
+        (sell_price/buy_price - commission) * cash
     end
 
     @spec create_transaction(String.t(), number, float, float, map) :: {number, map}
