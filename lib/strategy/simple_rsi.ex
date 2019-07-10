@@ -5,7 +5,14 @@ defmodule ExBacktest.Strategy.SimpleRSI do
   @rsi_buy_limit 30
   @rsi_sell_limit 70
 
-  @spec potential_trades(list) :: {list, list}
+  @doc """
+  potential_trades Gives the potential buy and sell indexes in the given data
+
+  ## Parameters
+    - data: An array of price data like Close prices.
+
+  """
+  @spec potential_trades(list(float)) :: {list(integer), list(integer)}
   def potential_trades(data)do
       rsi_data = RSI.rsi_list(data)
       rsi_indexed_list = Enum.with_index(rsi_data)
