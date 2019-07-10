@@ -4,11 +4,11 @@ defmodule ExBacktest.Example.Example1 do
   alias ExBacktest.Strategy.SimpleRSI
   alias ExBacktest.Tools.CsvUtils
   alias ExBacktest.Tools.Chart
-  alias Jason.{Encoder}
+  alias Jason
 
   @symbol "BTCUSDT"
   @time_frame "1h"
-  @cash 1
+  @cash 1.0
   @commission 0.01
 
   def run() do
@@ -32,10 +32,10 @@ defmodule ExBacktest.Example.Example1 do
       num
     end)
     rsi_oscilator_data = %{"title"=> "RSI 14", "data" => rsi_data}
-    {final_cash, history} = Trader.do_trades(close, buys,sells,@cash,@commission)
+    {final_cash, history} = Trader.do_trades(close, buys, sells, @cash, @commission)
     history_json = Jason.encode!(history)
     IO.puts(final_cash)
     Chart.show(@symbol, close, dates,[rsi_oscilator_data],history_json)
-
+    :ok
   end
 end
