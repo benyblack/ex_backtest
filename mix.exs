@@ -3,7 +3,7 @@ defmodule ExBacktest.MixProject do
 
   @app_name :ex_backtest
   @version "0.0.1"
-  @elixir_version "~> 1.9"
+  @elixir_version "~> 1.8"
   @github "https://github.com/benyblack/ex_backtest"
 
   def project do
@@ -38,7 +38,8 @@ defmodule ExBacktest.MixProject do
   defp deps do
     [
       {:erlport, "~> 0.9"},
-      {:talib, "~> 0.3.5"}
+      {:talib, "~> 0.3.5"},
+      {:jason, "~> 1.1"}
     ]
   end
 end
