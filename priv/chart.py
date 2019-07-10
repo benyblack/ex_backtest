@@ -3,13 +3,14 @@ from bokeh.layouts import column
 from bokeh.plotting import figure, show, output_file
 from bokeh.models import LinearAxis, Range1d
 from bokeh.models.annotations import Title
+import json
+import collections
 
 def datetime(x):
     return np.array(x, dtype=np.datetime64)
 
 
 def create_plot(chart_title):
-    print(chart_title)
     plot = figure(x_axis_type="datetime", title=chart_title, plot_height=500, width=1000)
     plot.grid.grid_line_alpha = 0.3
     plot.xaxis.axis_label = 'Date'
@@ -75,12 +76,20 @@ def show_single_plot(plot):
     show(column(children=[plot]))
 
 
-def make_chart(pair_name: str, data: [], date_data: [], oscillator_data: [{}], trade_history: {}):
+def make_chart(pair_name: str, data: [], date_data: [], oscillator_data: [{}], trade_history_json: str):
+    trade_history = json.loads(trade_history_json)
+    # convert keys to integer since json encoder in Elixir convert keys to string
+    trade_history_unsorted = {int(k):v for k,v in trade_history.items()}
+    # also it needs to be sorted
+    trade_history = {}
+    for key in sorted(trade_history_unsorted):
+        trade_history[key] = trade_history_unsorted[key]
+
     # 1. create main chart and add series to it
     plot = create_plot(pair_name)
     line_colors = ['lightgray', 'blue', 'maroon']
     add_line_to_plot(plot, pair_name, date_data, data, line_colors[0])
-
+    
     # 2. Add BUY and SELL points to the main char
     buy_indexes = [x for x in trade_history if trade_history[x]['type'] == 'BUY']
     buy_prices = [data[x] for x in buy_indexes]
@@ -96,7 +105,7 @@ def make_chart(pair_name: str, data: [], date_data: [], oscillator_data: [{}], t
     oscillator = create_plot_oscillator(plot)
 
     def add_to_oscillator(item):
-        add_line_to_plot(oscillator, item["title"], date_data, item["data"], line_colors[0])
+        add_line_to_plot(oscillator, decode_str(item[b'title']), date_data, item[b'data'], line_colors[0])
 
     list(map(add_to_oscillator, oscillator_data))
 
