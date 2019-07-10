@@ -52,7 +52,7 @@ defmodule ExBacktest.Strategy.Trader  do
         z
     end
 
-    @spec create_transaction(charlist(), number, float, float, map) :: {number, map}
+    @spec create_transaction(String.t(), number, float, float, map) :: {number, map}
     def create_transaction(type, buy_or_sell_index, price, cash, history) do
         new_transaction = %{buy_or_sell_index => %{"type" => type, "price" => price, "cash" => cash}}
         new_history = Map.merge(history, new_transaction)
