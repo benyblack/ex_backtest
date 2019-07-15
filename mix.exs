@@ -38,7 +38,7 @@ defmodule ExBacktest.MixProject do
   defp deps do
     [
       {:erlport, "~> 0.9"},
-      {:talib, "~> 0.3.5"},
+      {:talib, "~> 0.3.6"},
       {:jason, "~> 1.1"}
     ]
   end
