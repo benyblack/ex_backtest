@@ -1,6 +1,18 @@
 # ExBacktest
 
-**TODO: Add description**
+For running the examples:
+```
+> iex -S mix
+
+ExBacktest.Example.SmaCrossover.run()
+```
+
+It will open a browser and will show something like this:
+
+![image](https://user-images.githubusercontent.com/772474/62280598-8c8bd800-b44c-11e9-89da-97f87538c778.png)
+
+Before running the examples you need to have some OHLCV files. There is a repo for Binance data here (https://github.com/benyblack/BinanceDataset/releases/)
+
 
 ## Installation
 
