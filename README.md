@@ -13,21 +13,9 @@ It will open a browser and will show something like this:
 
 Before running the examples you need to have some OHLCV files. There is a repo for Binance data here (https://github.com/benyblack/BinanceDataset/releases/)
 
-
-## Installation
-
-If [available in Hex](https://hexdocs.pm/ex_backtest/api-reference.html), the package can be installed
-by adding `ex_backtest` to your list of dependencies in `mix.exs`:
-
-```elixir
-def deps do
-  [
-    {:ex_backtest, "~> 0.1.0"}
-  ]
-end
+For chart I am using Bokeh in python. If you check the python file in priv folder it needs some libraries in Pyhton which have to be installed via PIP.
 ```
-
-Documentation can be generated with [ExDoc](https://github.com/elixir-lang/ex_doc)
-and published on [HexDocs](https://hexdocs.pm). Once published, the docs can
-be found at [https://hexdocs.pm/ex_backtest](https://hexdocs.pm/ex_backtest).
+pip install numpy bokeh
+```
+The docs can be found at [https://hexdocs.pm/ex_backtest](https://hexdocs.pm/ex_backtest).
 
