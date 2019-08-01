@@ -13,14 +13,15 @@ defmodule ExBacktest.MixProject do
       version: @version,
       elixir: @elixir_version,
       start_permanent: Mix.env() == :prod,
-      deps: deps()
+      deps: deps(),
+      package: package()
     ]
   end
 
   def package do
     [
       name: @app_name,
-      description: "Backtesting Tools",
+      description: "Backtesting library for trading strategies",
       licenses: ["MIT"],
       maintainers: ["Behnam Shomali"],
       links: %{Github: @github}
@@ -37,6 +38,7 @@ defmodule ExBacktest.MixProject do
   # Run "mix help deps" to learn about dependencies.
   defp deps do
     [
+      {:ex_doc, ">= 0.0.0", only: :dev, runtime: false},
       {:erlport, "~> 0.9"},
       {:talib, "~> 0.3.6"},
       {:jason, "~> 1.1"}
