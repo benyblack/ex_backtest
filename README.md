@@ -17,5 +17,8 @@ For chart I am using Bokeh in python. If you check the python file in priv folde
 ```
 pip install numpy bokeh
 ```
+
+Also, I use [talib](https://github.com/benyblack/talib) as my indicator library in Elixir.
+
 The docs can be found at [https://hexdocs.pm/ex_backtest](https://hexdocs.pm/ex_backtest).
 
