@@ -76,7 +76,7 @@ def show_single_plot(plot):
     show(column(children=[plot]))
 
 
-def make_chart(pair_name: str, data: [], date_data: [], oscillator_data: [{}], trade_history_json: str):
+def make_chart(pair_name: str, data: [], more_data: str, date_data: [], oscillator_data: [{}], trade_history_json: str):
     trade_history = json.loads(trade_history_json)
     # convert keys to integer since json encoder in Elixir convert keys to string
     trade_history_unsorted = {int(k):v for k,v in trade_history.items()}
@@ -101,6 +101,17 @@ def make_chart(pair_name: str, data: [], date_data: [], oscillator_data: [{}], t
     add_up_to_plot(plot, "Buys", buy_dates, buy_prices)
     add_down_to_plot(plot, "Sells", sell_dates, sell_prices)
 
+    if more_data != "":
+        more_data_dict = json.loads(more_data)
+        plot.extra_y_ranges = {"ind": Range1d(start=min(data), end=max(data))}
+        plot.add_layout(LinearAxis(y_range_name="ind", axis_label="Ind"), 'right')
+        i = 0
+        for key in more_data_dict:
+            i += 1
+            if i >2:
+                i = 0
+            add_line_to_plot(plot, key, date_data, more_data_dict[key], line_colors[i])
+
     # 3. Create oscillator and add series to it
     oscillator = create_plot_oscillator(plot)
 
@@ -124,10 +135,11 @@ def make_chart(pair_name: str, data: [], date_data: [], oscillator_data: [{}], t
     return (plot, oscillator, trades)
 
 
-def make_chart_and_show(pair_name: str, data: [], date_data: [], oscillator_data: [{}], trade_history: {}):
+def make_chart_and_show(pair_name: str, data: [], more_data: str, date_data: [], oscillator_data: [{}], trade_history: {}):
     pair_name = decode_str(pair_name)
     date_data = decode_str_array(date_data)
-    plot, oscillator, trades = make_chart(pair_name, data, date_data, oscillator_data, trade_history)
+    more_data = decode_str(more_data)
+    plot, oscillator, trades = make_chart(pair_name, data, more_data, date_data, oscillator_data, trade_history)
     show_plot(plot, oscillator, trades)
 
 def decode_str(str):
