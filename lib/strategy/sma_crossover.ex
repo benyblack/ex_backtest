@@ -15,6 +15,7 @@ defmodule ExBacktest.Strategy.SmaCrossover do
 
 
   @spec add_buy_point(float, float, float, float, list(integer), integer) :: list(integer)
+  def add_buy_point(prev_low, prev_high, _, _, buys, _) when prev_low == nil or prev_high == nil, do: buys
   def add_buy_point(prev_low, prev_high, cur_low, cur_high, buys, index)
                when prev_low < prev_high and cur_low > cur_high, do: buys ++ [index]
   def add_buy_point(_, _, _, _, buys, _), do: buys
@@ -39,9 +40,9 @@ defmodule ExBacktest.Strategy.SmaCrossover do
       reversed_sma_low_list = Enum.reverse(sma_low_list)
       reversed_sma_high_list = Enum.reverse(sma_high_list)
       {reversed_buys, reversed_sells} = buys_sells(reversed_sma_low_list, reversed_sma_high_list, [], [])
-      buys = Enum.map(reversed_buys, fn(x) -> length(sma_high_list) - x - 1 end)
-      sells = Enum.map(reversed_sells, fn(x) -> length(sma_high_list) - x - 1 end)
-      {buys, sells}
+      buys = Enum.reverse(reversed_buys)
+      sells = Enum.reverse(reversed_sells)
+      { buys, sells }
   end
 
 end
