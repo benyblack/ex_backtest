@@ -16,7 +16,7 @@ Before running the examples you need to have some OHLCV files. There is a repo f
 
 ## Installation
 
-If [available in Hex](https://hex.pm/docs/publish), the package can be installed
+If [available in Hex](https://hexdocs.pm/ex_backtest/api-reference.html), the package can be installed
 by adding `ex_backtest` to your list of dependencies in `mix.exs`:
 
 ```elixir
